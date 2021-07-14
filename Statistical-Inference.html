@@ -192,17 +192,8 @@ for (i in 1 : 1000) {
 <div id="part-2-toothgrowth" class="section level2">
 <h2>Part 2: ToothGrowth</h2>
 <p>Now, for Part 2, lets load and explore the ToothGrowth dataset in R.</p>
-<pre class="r"><code>library(dplyr)</code></pre>
-<pre><code>## 
-## Attaching package: &#39;dplyr&#39;</code></pre>
-<pre><code>## The following objects are masked from &#39;package:stats&#39;:
-## 
-##     filter, lag</code></pre>
-<pre><code>## The following objects are masked from &#39;package:base&#39;:
-## 
-##     intersect, setdiff, setequal, union</code></pre>
-<pre class="r"><code>ToothGrowth%&gt;% group_by(dose, supp)%&gt;%summarise(mean(len), n())</code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;dose&#39;. You can override using the `.groups` argument.</code></pre>
+<pre class="r"><code>library(dplyr)
+ToothGrowth%&gt;% group_by(dose, supp)%&gt;%summarise(mean(len), n())</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["dose"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["supp"],"name":[2],"type":["fct"],"align":["left"]},{"label":["mean(len)"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["n()"],"name":[4],"type":["int"],"align":["right"]}],"data":[{"1":"0.5","2":"OJ","3":"13.23","4":"10"},{"1":"0.5","2":"VC","3":"7.98","4":"10"},{"1":"1.0","2":"OJ","3":"22.70","4":"10"},{"1":"1.0","2":"VC","3":"16.77","4":"10"},{"1":"2.0","2":"OJ","3":"26.06","4":"10"},{"1":"2.0","2":"VC","3":"26.14","4":"10"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}

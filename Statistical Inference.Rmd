@@ -1,13 +1,17 @@
 ---
 title: "Statistical Inference Course Project"
 author: "Dylan Hazlett"
+geometry: "left=2cm,right=2cm,top=1.5cm,bottom=2cm"
 output:
+  pdf_document: default
   html_document:
     df_print: paged
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+library(dplyr)
 set.seed(4)
 ```
 
@@ -18,7 +22,6 @@ Thank you for reviewing my final report for the Statistical Inference Course. In
 
 ```{r}
 mns = NULL
-vars = NULL
 for (i in 1 : 1000) {
   mns = c(mns, mean(rexp(40, .2))) 
 }
@@ -28,20 +31,19 @@ The above block of code simulates the distribution of averages of 40 exponential
 lambda = 0.2
 theor_mean = 1/ lambda
 avg_sample_mean = mean(mns)
-print(paste("Using the mean() function on the array, mns, we can calculate the average Sample Mean:", avg_sample_mean))
+print(paste("Using the mean() function on mns, we calculate the average Sample Mean:", avg_sample_mean))
 ```
 Theoretically, and with enough simulations, this value will converage to the mean of the exponential distribution, 1/lambda or 5 since lambda = .2.
-```{r, echo = FALSE, fig.width=5, fig.height=5, fig.align='center'}
-library(ggplot2)
+```{r, echo = FALSE, out.width="60%"}
 ggplot(data.frame(mns), aes(x=mns))+
   geom_histogram(alpha = .20, binwidth=.3, colour = "black", aes(y = ..density..))+
   geom_vline(xintercept = c(theor_mean,avg_sample_mean), colour = c("red", "blue"), size = 1)+
-  labs(title = "Sample Mean Distribution of 1000 Expontential Samples", x= "Sample Mean", y = "Density") 
+  labs(title = "Sample Mean Distribution of 1000 Exponential Samples", x= "Sample Mean", y = "Density") 
 ```
 This figure shows the distribution of the 1000 sample means with two vertical lines, the average sample mean in blue and the theoretical mean in red. The two may appear to be touching on the chart due to how close they are in value.
 ```{r, echo = FALSE}
 sample_var = var(mns)
-print(paste("Using the var() function, we can calculate that the Sample Variance is", sample_var))
+print(paste("Using the var() function, we calculate that the Sample Variance is", sample_var))
 ```
 To compare the sample variance to its theoretical value for the exponential distribution, we use the following formula given that n equals 40 and sigma equals the standard deviation, given that the standard deviation of the exponential distribution is 1/lambda where lambda equals 0.2.
 $\bar Var = \sigma^2 / n$
@@ -54,16 +56,15 @@ print(paste("The Theoretical Variance for 40 exponential variables where lambda 
 Given infinite simulations, the sample variance will converge to this value of 0.625.
 
 This simulation is an example of the Central Limit Theorem, where the mean samples resulting from the simulations are normally distributed around the theoretical mean.
-```{r, echo = FALSE, fig.width=5, fig.height=5, fig.align='center'}
-hist(rexp(1000, .2),main = "Exponential Distribution of 1000 variables",xlab = "Output")
-```
-The exponential distribution is of course not normally distributed; but, after taking 1000 random and independent samples of the mean of this distrubtion, we get the below distribution that appears to be a normal Guassian distribution of samples.
-```{r, echo = FALSE, fig.width=5, fig.height=5, fig.align='center'}
+
+```{r, warning = FALSE, echo=FALSE, out.width="50%"}
 ggplot(data.frame(mns), aes(x=mns))+
   geom_histogram(alpha = .20, binwidth=.3, colour = "black", aes(y = ..density..))+
   geom_density()+
   labs(title = "Sample Mean Distribution of 1000 Expontential Samples", x= "Sample Mean", y = "Density") 
+hist(rexp(1000, .2),main = "Exponential Distribution of 1000 variables",xlab = "Output")
 ```
+The exponential distribution is of course not normally distributed; but, after taking 1000 random and independent samples of the mean of this distribution, we get the below distribution that appears to be a normal Guassian distribution of samples.
 Although the right tail of this distribution stretches further from the mean than that of the right, that is expected due to the nature of the exponential distribution stretching to infinity on the x-axis.
 We accept this drawback and conclude that the distribution is approximately normal. Using the central limit theorem, we assume iid, meaning our exponential variables were sampled randomly and independently of one another. We also assume that the sample size of 40 independent variable was sufficiently large, which is a safe assumption due to the resulting distribution chart.
 
@@ -71,21 +72,19 @@ We accept this drawback and conclude that the distribution is approximately norm
 
 Now, for Part 2, lets load and explore the ToothGrowth dataset in R.
 
-```{r ToothGrowth}
-library(dplyr)
-ToothGrowth%>% group_by(dose, supp)%>%summarise(mean(len), n())
-```
-The ToothGrowth dataset has 60 data entries of tooth length (len), dosage mg/day (dos), and supplement type (supp). With two supplements (VC or OJ) and 3 dosage levels (0.5, 1, and 2 mg/day), there are 10 data entries to each of the 6 group combinations of dosage and suplement. Since these entries are not paired, any comparison between these groups will use the mean, which is provided to give a rough expectation of what groups may have significantly different lengths. It apprears that lower doses contribute to less tooth lenght growth, as well as more growth with the OJ supplement vs the VC supplement for lower doses.
-```{r, echo = FALSE, fig.width=5, fig.height=5, fig.align='center'}
+As stated in the R help file, the ToothGrowth dataset has 60 data entries of tooth length (len), dosage mg/day (dos), and supplement type (supp). With two supplements (VC or OJ) and 3 dosage levels (0.5, 1, and 2 mg/day), there are 10 data entries to each of the 6 group combinations of dosage and supplement. Since these entries are not paired, any comparison between these groups will use the mean.
+```{r ToothGrowth, warning = FALSE, echo=FALSE, out.width="60%"}
 ggplot(data = ToothGrowth, aes(x= dose, y = len, colour = supp)) +
   geom_point() +
-  labs(title = "Scatterplot of Toothgrowth")
+  labs(title = "Toothgrowth Length by Dose and Supp")
 ```
 Here is a visual comparison of all of the length data points split by dosage on the x-axis and supplement for color. We can see that, at a dosage of 2 mg/day, there is little difference in the distribution of length among supplements. We will keep this and our earlier hypothesis in mind as we now construct confidence intervals for all 6 groups.
 ```{r}
-ToothGrowth%>% group_by(dose, supp)%>%summarise(mean(len),lower_int = mean(len)-(qt(.975,9)*sd(len)/ sqrt(n())), upper_int = mean(len)+(qt(.975,9)*sd(len)/ sqrt(n())))
+ToothGrowth%>% group_by(dose, supp)%>%summarise(mean = mean(len),
+    lower_bound = mean(len)-(qt(.975,9)*sd(len)/ sqrt(n())),
+    upper_bound = mean(len)+(qt(.975,9)*sd(len)/ sqrt(n())))
 ```
-The figure above shows the 95% t confidence interval for each of the 6 testing groups. We can conclude that for any of the intervals that have overlapping ranges, a t test will not have a significant result at 95% confidence - these comparisons include: OJ vs VC at 2.0 dosage, OJ at 1.0 dosage compared to either supplement groups at 2.0 dosage, OJ at 0.5 dosage vs VC at 1.0 dosage. We can make several significant conclusions about the individual group comparisons that do not intersect eachother's t confidence interval, but it may be more useful to go over the higher level implication with this dataset.
+The figure above shows the 95% t confidence interval for each of the 6 testing groups. We can conclude that for any of the intervals that have overlapping ranges, a t test will not have a significant result at 95% confidence. We can make several significant conclusions from the individual group comparisons that do not intersect eachother's t confidence interval, but it may be more useful to go over the higher level implication with this dataset.
 It would appear that, at lower doses (0.5 and 1.0), the OJ supplement has a significant greater effect on tooth growth than that of the VC supplement; however, at the highest dosage of 2.0, the tooth growth differences between supplements are negligable. Though tooth growth for the OJ groups does increase as the dosage increases (we are more than 95% confident that there is a length difference between OJ groups of 0.5 mg/day and 2.0mg/day), lengths at consecutive doses are not different at 95% confidence; whereas VC supplement groups show steep, significant differences between all dosage levels. Because the data groups here are small, 10 subjects in each, we must be cautious with definitive conclusions about the population.
 
 Lastly, let's run a t test between supplements on all subjects with equal variances set to False: Given OJ, Var(len) = 43.63  Given VC, Var(len) = 68.33
@@ -93,6 +92,6 @@ Note: This test cannot be preformed with dosage as there are more than two group
 ```{r}
 t.test(len ~ supp, paired = FALSE, var.equal = FALSE, data = ToothGrowth)
 ```
-Using the t test result, we cannot conclude with 95% confidence that tooth growth is different between supplement groups.
+Using the t test result where 0 difference is inside the 95% confidence interval, we cannot conclude with 95% confidence that tooth growth is different between supplement groups.
 
 To use the t confidence intervals and the t test we assumes that the data are iid and have a roughly symmetrical distribution.
