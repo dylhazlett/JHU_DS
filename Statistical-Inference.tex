@@ -1,0 +1,330 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Statistical Inference Course Project},
+  pdfauthor={Dylan Hazlett},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifluatex
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+
+\title{Statistical Inference Course Project}
+\author{Dylan Hazlett}
+\date{}
+
+\begin{document}
+\maketitle
+
+Thank you for reviewing my final report for the Statistical Inference
+Course. In Part 1, we will simulate a collection exponential variables,
+then compare the sample's summary statistics to their theoretical values
+and distribution. In Part 2, we will analyze the differences in
+tooth-growth among varying doses and delivery methods of Vitamin C using
+the ToothGrowth dataset in R.
+
+\hypertarget{part-1-simulation-of-expontentially-distributed-variables}{%
+\subsubsection{Part 1: Simulation of Expontentially Distributed
+Variables}\label{part-1-simulation-of-expontentially-distributed-variables}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mns }\OtherTok{=} \ConstantTok{NULL}
+\NormalTok{vars }\OtherTok{=} \ConstantTok{NULL}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1} \SpecialCharTok{:} \DecValTok{1000}\NormalTok{) \{}
+\NormalTok{  mns }\OtherTok{=} \FunctionTok{c}\NormalTok{(mns, }\FunctionTok{mean}\NormalTok{(}\FunctionTok{rexp}\NormalTok{(}\DecValTok{40}\NormalTok{, .}\DecValTok{2}\NormalTok{))) }
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+The above block of code simulates the distribution of averages of 40
+exponentials with lambda value .2, 1000 times. After initializing `mns'
+to record the means, a for loop runs the exponential distribution
+expressions and gathers each mean 1000 times. The output is an array of
+1000 independently sampled means.
+
+\begin{verbatim}
+## [1] "Using the mean() function on the array, mns, we can calculate the average Sample Mean: 5.02528893363976"
+\end{verbatim}
+
+Theoretically, and with enough simulations, this value will converage to
+the mean of the exponential distribution, 1/lambda or 5 since lambda =
+.2.
+\includegraphics{Statistical-Inference_files/figure-latex/unnamed-chunk-3-1.pdf}
+This figure shows the distribution of the 1000 sample means with two
+vertical lines, the average sample mean in blue and the theoretical mean
+in red. The two may appear to be touching on the chart due to how close
+they are in value.
+
+\begin{verbatim}
+## [1] "Using the var() function, we can calculate that the Sample Variance is 0.651939499915466"
+\end{verbatim}
+
+To compare the sample variance to its theoretical value for the
+exponential distribution, we use the following formula given that n
+equals 40 and sigma equals the standard deviation, given that the
+standard deviation of the exponential distribution is 1/lambda where
+lambda equals 0.2. \(\bar Var = \sigma^2 / n\)
+
+\begin{verbatim}
+## [1] "The Theoretical Variance for 40 exponential variables where lambda equal 0.2 is 0.625"
+\end{verbatim}
+
+Given infinite simulations, the sample variance will converge to this
+value of 0.625.
+
+This simulation is an example of the Central Limit Theorem, where the
+mean samples resulting from the simulations are normally distributed
+around the theoretical mean.
+\includegraphics{Statistical-Inference_files/figure-latex/unnamed-chunk-6-1.pdf}
+The exponential distribution is of course not normally distributed; but,
+after taking 1000 random and independent samples of the mean of this
+distrubtion, we get the below distribution that appears to be a normal
+Guassian distribution of samples.
+\includegraphics{Statistical-Inference_files/figure-latex/unnamed-chunk-7-1.pdf}
+Although the right tail of this distribution stretches further from the
+mean than that of the right, that is expected due to the nature of the
+exponential distribution stretching to infinity on the x-axis. We accept
+this drawback and conclude that the distribution is approximately
+normal. Using the central limit theorem, we assume iid, meaning our
+exponential variables were sampled randomly and independently of one
+another. We also assume that the sample size of 40 independent variable
+was sufficiently large, which is a safe assumption due to the resulting
+distribution chart.
+
+\hypertarget{part-2-toothgrowth}{%
+\subsection{Part 2: ToothGrowth}\label{part-2-toothgrowth}}
+
+Now, for Part 2, lets load and explore the ToothGrowth dataset in R.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(dplyr)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'dplyr'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:stats':
+## 
+##     filter, lag
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ToothGrowth}\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{group\_by}\NormalTok{(dose, supp)}\SpecialCharTok{\%\textgreater{}\%}\FunctionTok{summarise}\NormalTok{(}\FunctionTok{mean}\NormalTok{(len), }\FunctionTok{n}\NormalTok{())}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `summarise()` has grouped output by 'dose'. You can override using the `.groups` argument.
+\end{verbatim}
+
+\begin{verbatim}
+## # A tibble: 6 x 4
+## # Groups:   dose [3]
+##    dose supp  `mean(len)` `n()`
+##   <dbl> <fct>       <dbl> <int>
+## 1   0.5 OJ          13.2     10
+## 2   0.5 VC           7.98    10
+## 3   1   OJ          22.7     10
+## 4   1   VC          16.8     10
+## 5   2   OJ          26.1     10
+## 6   2   VC          26.1     10
+\end{verbatim}
+
+The ToothGrowth dataset has 60 data entries of tooth length (len),
+dosage mg/day (dos), and supplement type (supp). With two supplements
+(VC or OJ) and 3 dosage levels (0.5, 1, and 2 mg/day), there are 10 data
+entries to each of the 6 group combinations of dosage and suplement.
+Since these entries are not paired, any comparison between these groups
+will use the mean, which is provided to give a rough expectation of what
+groups may have significantly different lengths. It apprears that lower
+doses contribute to less tooth lenght growth, as well as more growth
+with the OJ supplement vs the VC supplement for lower doses.
+\includegraphics{Statistical-Inference_files/figure-latex/unnamed-chunk-8-1.pdf}
+Here is a visual comparison of all of the length data points split by
+dosage on the x-axis and supplement for color. We can see that, at a
+dosage of 2 mg/day, there is little difference in the distribution of
+length among supplements. We will keep this and our earlier hypothesis
+in mind as we now construct confidence intervals for all 6 groups.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ToothGrowth}\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{group\_by}\NormalTok{(dose, supp)}\SpecialCharTok{\%\textgreater{}\%}\FunctionTok{summarise}\NormalTok{(}\FunctionTok{mean}\NormalTok{(len),}\AttributeTok{lower\_int =} \FunctionTok{mean}\NormalTok{(len)}\SpecialCharTok{{-}}\NormalTok{(}\FunctionTok{qt}\NormalTok{(.}\DecValTok{975}\NormalTok{,}\DecValTok{9}\NormalTok{)}\SpecialCharTok{*}\FunctionTok{sd}\NormalTok{(len)}\SpecialCharTok{/} \FunctionTok{sqrt}\NormalTok{(}\FunctionTok{n}\NormalTok{())), }\AttributeTok{upper\_int =} \FunctionTok{mean}\NormalTok{(len)}\SpecialCharTok{+}\NormalTok{(}\FunctionTok{qt}\NormalTok{(.}\DecValTok{975}\NormalTok{,}\DecValTok{9}\NormalTok{)}\SpecialCharTok{*}\FunctionTok{sd}\NormalTok{(len)}\SpecialCharTok{/} \FunctionTok{sqrt}\NormalTok{(}\FunctionTok{n}\NormalTok{())))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `summarise()` has grouped output by 'dose'. You can override using the `.groups` argument.
+\end{verbatim}
+
+\begin{verbatim}
+## # A tibble: 6 x 5
+## # Groups:   dose [3]
+##    dose supp  `mean(len)` lower_int upper_int
+##   <dbl> <fct>       <dbl>     <dbl>     <dbl>
+## 1   0.5 OJ          13.2      10.0      16.4 
+## 2   0.5 VC           7.98      6.02      9.94
+## 3   1   OJ          22.7      19.9      25.5 
+## 4   1   VC          16.8      15.0      18.6 
+## 5   2   OJ          26.1      24.2      28.0 
+## 6   2   VC          26.1      22.7      29.6
+\end{verbatim}
+
+The figure above shows the 95\% t confidence interval for each of the 6
+testing groups. We can conclude that for any of the intervals that have
+overlapping ranges, a t test will not have a significant result at 95\%
+confidence - these comparisons include: OJ vs VC at 2.0 dosage, OJ at
+1.0 dosage compared to either supplement groups at 2.0 dosage, OJ at 0.5
+dosage vs VC at 1.0 dosage. We can make several significant conclusions
+about the individual group comparisons that do not intersect eachother's
+t confidence interval, but it may be more useful to go over the higher
+level implication with this dataset. It would appear that, at lower
+doses (0.5 and 1.0), the OJ supplement has a significant greater effect
+on tooth growth than that of the VC supplement; however, at the highest
+dosage of 2.0, the tooth growth differences between supplements are
+negligable. Though tooth growth for the OJ groups does increase as the
+dosage increases (we are more than 95\% confident that there is a length
+difference between OJ groups of 0.5 mg/day and 2.0mg/day), lengths at
+consecutive doses are not different at 95\% confidence; whereas VC
+supplement groups show steep, significant differences between all dosage
+levels. Because the data groups here are small, 10 subjects in each, we
+must be cautious with definitive conclusions about the population.
+
+Lastly, let's run a t test between supplements on all subjects with
+equal variances set to False: Given OJ, Var(len) = 43.63 Given VC,
+Var(len) = 68.33 Note: This test cannot be preformed with dosage as
+there are more than two groups.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{t.test}\NormalTok{(len }\SpecialCharTok{\textasciitilde{}}\NormalTok{ supp, }\AttributeTok{paired =} \ConstantTok{FALSE}\NormalTok{, }\AttributeTok{var.equal =} \ConstantTok{FALSE}\NormalTok{, }\AttributeTok{data =}\NormalTok{ ToothGrowth)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Welch Two Sample t-test
+## 
+## data:  len by supp
+## t = 1.9153, df = 55.309, p-value = 0.06063
+## alternative hypothesis: true difference in means between group OJ and group VC is not equal to 0
+## 95 percent confidence interval:
+##  -0.1710156  7.5710156
+## sample estimates:
+## mean in group OJ mean in group VC 
+##         20.66333         16.96333
+\end{verbatim}
+
+Using the t test result, we cannot conclude with 95\% confidence that
+tooth growth is different between supplement groups.
+
+To use the t confidence intervals and the t test we assumes that the
+data are iid and have a roughly symmetrical distribution.
+
+\end{document}
